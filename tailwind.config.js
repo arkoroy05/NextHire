@@ -7,7 +7,7 @@ const {
 export default {
     darkMode: ["class"],
     content: [
-    "./src/**/*.{js,jsx,ts,tsx}"
+    "./index.html", "./src/**/*.{ts,tsx,js,jsx}"
   ],
   theme: {
   	extend: {
@@ -60,7 +60,7 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate"),require("addVariablesForColors")],
+  plugins: [require("tailwindcss-animate"),addVariablesForColors],
 }
 
 function addVariablesForColors({ addBase, theme }) {
