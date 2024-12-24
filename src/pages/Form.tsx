@@ -1,5 +1,6 @@
-export default function Dashboard() {
+
+export default function Form() {
   return (
-    <div>Dashboard</div>
+   <div>Hello</div>
   )
 }
