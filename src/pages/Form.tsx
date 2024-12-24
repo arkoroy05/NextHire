@@ -33,10 +33,107 @@ const educationOptions = [
 ]
 
 
-const languageOptions = ['JavaScript', 'Python', 'Java', 'C#', 'C++']
-const frameworkOptions = ['React', 'Angular', 'Vue.js', 'Django', 'Spring']
+const languageOptions = [
+  "JavaScript",
+  "Python",
+  "Java",
+  "C#",
+  "C++",
+  "Ruby",
+  "PHP",
+  "TypeScript",
+  "Swift",
+  "Kotlin",
+  "Go",
+  "Rust",
+  "Dart",
+  "Scala",
+  "R",
+  "SQL",
+  "Perl",
+  "MATLAB",
+  "Shell",
+  "Lua",
+  "Groovy",
+  "Haskell",
+  "Elixir",
+  "Julia",
+  "F#",
+  "Objective-C",
+  "Visual Basic",
+  "Assembly",
+  "COBOL",
+  "Fortran"
+];
+
+
+const frameworkOptions =  [
+  "React",
+  "Angular",
+  "Vue.js",
+  "Svelte",
+  "Next.js",
+  "Nuxt.js",
+  "Express",
+  "Django",
+  "Flask",
+  "FastAPI",
+  "Ruby on Rails",
+  "Spring Boot",
+  "Laravel",
+  "ASP.NET Core",
+  "Meteor",
+  "Ember.js",
+  "Backbone.js",
+  "Symfony",
+  "CakePHP",
+  "CodeIgniter",
+  "Play Framework",
+  "Koa",
+  "Gin",
+  "Phoenix",
+  "Hapi.js",
+  "Gatsby",
+  "Gridsome",
+  "Electron",
+  "Quasar",
+  "Ionic"
+];
+
+
 const developerToolOptions = ['Visual Studio Code', 'Git', 'Docker', 'Jenkins', 'Jira']
-const libraryOptions = ['Redux', 'Lodash', 'Axios', 'NumPy', 'Pandas']
+const libraryOptions = [
+  "React",
+  "Angular",
+  "Vue.js",
+  "jQuery",
+  "Lodash",
+  "Express",
+  "Django",
+  "Flask",
+  "NumPy",
+  "Pandas",
+  "Matplotlib",
+  "TensorFlow",
+  "PyTorch",
+  "Keras",
+  "Scikit-learn",
+  "BeautifulSoup",
+  "Requests",
+  "FastAPI",
+  "Next.js",
+  "Tailwind CSS",
+  "Bootstrap",
+  "Axios",
+  "Redux",
+  "Socket.IO",
+  "Three.js",
+  "Chart.js",
+  "Moment.js",
+  "Prisma",
+  "PostgreSQL",
+  "Firebase"
+]
 export default function Form() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -139,7 +236,7 @@ export default function Form() {
         {['languages', 'frameworks', 'developerTools', 'libraries'].map((field) => (
           <div key={field}>
             <Label>{field.charAt(0).toUpperCase() + field.slice(1)}</Label>
-            <div className="grid grid-cols-2 gap-2 mb-2">
+            <div className="grid grid-cols-4 gap-5 mb-2">
               {(field === 'languages' ? languageOptions :
                 field === 'frameworks' ? frameworkOptions :
                 field === 'developerTools' ? developerToolOptions :
