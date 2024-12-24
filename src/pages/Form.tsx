@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { X } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 
 type Education = {
@@ -135,6 +136,7 @@ const libraryOptions = [
   "Firebase"
 ]
 export default function Form() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState<FormData>({
     name: '',
     education: [],
@@ -185,11 +187,11 @@ export default function Form() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log('Form submitted:', formData)
-    // Here you would typically send the data to an API
+    navigate('/projects')
   }
   return (
     <div className="container mx-auto p-4 max-w-2xl">
-      <h1 className="text-2xl font-bold mb-6">Developer Profile</h1>
+      <h1 className="text-7xl font-bold mb-6">Developer Profile</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <Label htmlFor="name">Name</Label>
@@ -202,7 +204,7 @@ export default function Form() {
         </div>
 
         <div>
-          <Label>Education</Label>
+          <div className='text-xl font-bold mb-4'>Education</div>
           <div className="space-y-2">
             {educationOptions.map((option) => (
               <div key={option.id} className="flex flex-col space-y-2">
@@ -235,7 +237,7 @@ export default function Form() {
 
         {['languages', 'frameworks', 'developerTools', 'libraries'].map((field) => (
           <div key={field}>
-            <Label>{field.charAt(0).toUpperCase() + field.slice(1)}</Label>
+            <div className='text-xl font-bold mb-4'>{field.charAt(0).toUpperCase() + field.slice(1)}</div>
             <div className="grid grid-cols-4 gap-5 mb-2">
               {(field === 'languages' ? languageOptions :
                 field === 'frameworks' ? frameworkOptions :
@@ -244,7 +246,6 @@ export default function Form() {
                 <div key={option} className="flex items-center space-x-2">
                   <Checkbox 
                     id={`${field}-${option}`}
-                    //ts-ignore
                     checked={formData[field as keyof FormData].includes(option)}
                     onCheckedChange={() => handleMultiSelect(field as 'languages' | 'frameworks' | 'developerTools' | 'libraries', option)}
                   />
@@ -261,7 +262,7 @@ export default function Form() {
                     onClick={() => handleMultiSelect(field as 'languages' | 'frameworks' | 'developerTools' | 'libraries', item)}
                     className="text-primary-foreground hover:text-secondary-foreground"
                   >
-                    <X size={14} />
+                    <X color='white' size={14} />
                   </button>
                 </div>
               ))}
@@ -270,7 +271,7 @@ export default function Form() {
         ))}
 
         <div>
-          <Label htmlFor="linkedinUrl">LinkedIn URL</Label>
+          <div className='text-xl font-bold mb-4' htmlFor="linkedinUrl">LinkedIn URL</div>
           <Input 
             id="linkedinUrl" 
             value={formData.linkedinUrl} 
@@ -280,7 +281,7 @@ export default function Form() {
         </div>
 
         <div>
-          <Label htmlFor="githubUrl">GitHub URL</Label>
+          <div className='text-xl font-bold mb-4' htmlFor="githubUrl">GitHub URL</div>
           <Input 
             id="githubUrl" 
             value={formData.githubUrl} 
@@ -289,7 +290,7 @@ export default function Form() {
           />
         </div>
 
-        <Button type="submit" className="w-full">Submit</Button>
+        <Button type="submit" className="w-full">Proceed to Projects</Button>
       </form>
     </div>
   )
