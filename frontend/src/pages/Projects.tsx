@@ -57,7 +57,7 @@ const Projects = () => {
             link: project.link
           });
         }
-        navigate('/resume');
+        navigate('/dashboard');
       }} className="bg-amber-200">
         Proceed to view templates
       </Button>

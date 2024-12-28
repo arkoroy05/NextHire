@@ -11,12 +11,14 @@ import axios from "axios";
 
 const userId: string | null = localStorage.getItem('userId');
 
+
 const ResumeData = async() => {
   try {
     const res = await axios.get('http://localhost:3000/user', {
       params: { userId }
     });
     const { user, projects, educationAndSkills } = res.data;
+    console.log(user, projects, educationAndSkills, "something");
     return { user, projects, educationAndSkills };
   } catch (error) {
     console.error('Error fetching user data:', error);
@@ -27,7 +29,7 @@ const ResumeData = async() => {
 function Template() {
   const { id } = useParams();
   const template = resumeTemplates.find((template) => template.id === Number(id));
-  const userData = {
+  var userData = {
     name: "John Doe",
     jobTitle: "Software Engineer",
     email: "john.doe@example.com",
@@ -99,6 +101,46 @@ function Template() {
     linkedinUrl: "https://www.linkedin.com/in/john-doe/",
     githubUrl: "https://github.com/john-doe",
   };
+type Education = {
+  type: string;
+  name: string;
+  cgpa: string;
+};
+type Experience = {
+  designation: string;
+  company: string;
+  duration: string;
+};
+type Project = {
+  id: number;
+  name: string;
+  description: string;
+  links: string;
+}
+type UserData = {
+  name: string;
+  jobTitle: string;
+  skillsTemplate: string;
+  skills: string[];
+  educationTemplate: string;
+  education: Education[];
+  about: string;
+  linkedinUrl: string;
+  githubUrl: string;
+  experienceTemplate: string;
+  experience: Experience[];
+  projectsTemplate: string;
+  projects: Project[];
+  librariesTemplate: string;
+  libraries: string[];
+  developerToolsTemplate: string;
+  developerTools: string[];
+  frameworksTemplate: string;
+  frameworks: string[];
+  languagesTemplate: string;    
+  languages: string[];
+};
+
 
   const saveAsPDF = () => {
     const element = document.getElementById("template");

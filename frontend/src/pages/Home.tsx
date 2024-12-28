@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 export default function Home() {
   return (
     <div className="h-full dark">
@@ -39,14 +41,17 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="absolute top-0 left-0  flex flex-col items-center justify-center h-full w-full translate-y-[-25vh]">
-        <h1 className="font-mono text-lime-500 text-[calc(100vh/4.5)] font-light  -m-4">
+      <div className="absolute top-0 left-0  flex flex-col items-center justify-center h-full w-full translate-y-[-10vh]">
+        <h1 className="font-mono text-lime-500 text-[calc(100vh/4.5)] font-light -m-4">
           {"<NEXTHIRE>"}
         </h1>
         <p className="font-mono text-neutral-400 text-[calc(100vh/15)] font-light">
           Aesthetic resumes at your disposal.
         </p>
+        <Button variant={"outline"} className="w-auto my-5 p-8 mr-2 text-3xl font-bold font-mono text-neutral-300" onClick={() => window.location.href = '/form'}>Build your resume today {">"} </Button>
+
       </div>
+      
     </div>
   );
 }
