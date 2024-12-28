@@ -14,7 +14,12 @@ const userSchema = new mongoose.Schema({
 // Education and Skills Schema
 
 const educationAndSkillsSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Foreign key
+    userId:  { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true,
+        index: true 
+      }, // Foreign key
     education: [
         {
             level: {
@@ -78,7 +83,12 @@ const educationAndSkillsSchema = new mongoose.Schema({
 
 // Projects Schema
 const projectsSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Foreign key
+    userId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true,
+        index: true // Add index for better query performance
+      }, // Foreign key
     projectName: { type: String, required: true },
     description: { type: String, required: true , maxlength: 500},
     link: { type: String }, 

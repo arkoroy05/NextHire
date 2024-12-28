@@ -56,16 +56,20 @@ const ResumeTemplate = ({
         identifier: string,
         templateidentifier: string,
         templateplaceholder: string
-      ) =>
-        data[identifier]
-          .map((item: any) =>
-            (
-              templateHtml.match(
-                new RegExp(`<!--\\[\\[${templateidentifier}=(.*?)]]-->`)
-              )?.[1] || ""
-            ).replace(new RegExp(`{{${templateplaceholder}}}`, "g"), item)
-          )
-          .join("") || "";
+    ) => {
+        const array = data[identifier] || [];
+        if (!Array.isArray(array)) return '';
+        
+        return array
+            .map((item: any) => {
+                const template = templateHtml.match(
+                    new RegExp(`<!--\\[\\[${templateidentifier}=(.*?)]]-->`)
+                )?.[1] || "";
+                return template.replace(new RegExp(`{{${templateplaceholder}}}`, "g"), item);
+            })
+            .join("");
+    };
+    
       const parseTemplatefromObject = (
         data: any,
         identifier: string,
