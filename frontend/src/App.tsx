@@ -4,13 +4,13 @@ import Home from './pages/Home';
 import Form from './pages/Form';
 import Projects from './pages/Projects';
 import NavBar from './components/Nav';
-import Resume from './pages/Resume';
+import Template from './pages/Template';
 
 const App = () => {
     return (
       <html lang="en">
       <body
-        className={`text-amber-200 h-screen font-sans  `}
+        className={`text-lime-500 h-screen font-sans  `}
       >
         <NavBar />
         <main className="absolute top-[3rem] h-[calc(100vh-3rem)] w-full"><Router>
@@ -19,7 +19,7 @@ const App = () => {
        
                 <Route path="/form" element={<Form />} />
                 <Route path="/projects" element={<Projects />} />
-                <Route path="/resume" element={<Resume />} />
+                <Route path="/templates/:id" element={<Template />} />
             </Routes>
         </Router>
         </main>
