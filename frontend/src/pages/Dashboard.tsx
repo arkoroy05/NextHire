@@ -24,7 +24,7 @@ const Dashboard = () => {
                 onClick={() => window.location.href = `/templates/${item.id}`}
               >
                 <CardContent className="text-neutral-600 p-10">
-                  <img src="/" alt={`Image not found for ${item.name}`}></img>
+                  <img src={`/thumbnails/template-${item.id}.png`} alt={`Image not found for ${item.name}`}></img>
                 </CardContent>
                 <CardHeader>
                   <CardTitle>{item.name}</CardTitle>
