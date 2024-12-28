@@ -6,31 +6,38 @@ const resumeTemplates = [
       desc: "A cyberpunk-inspired design with neon accents and dark mode aesthetics",
       tags: ["dark", "modern", "cyberpunk", "neon"],
       template: `
-          <div class="h-full bg-gray-900 p-4 font-sans text-gray-100">
-            <div class="m-5">
-              <header class="border-b border-pink-500/30  mb-5">
-                <h1 class="text-4xl font-bold text-indigo-300">{{name}}</h1>
-                <p class="text-xl text-pink-400 mt-2">{{jobTitle}}</p>
-                <p class="text-gray-400 mt-4 max-w-2xl text-sm mb-2">{{about}}</p>
+          <div class="min-h-screen bg-gray-900 p-4 md:p-8 font-sans text-gray-100 overflow-x-hidden">
+            <div class="max-w-6xl mx-auto space-y-6">
+              <header class="border-b border-pink-500/30 pb-6">
+                <h1 class="text-4xl md:text-6xl font-bold text-indigo-300 truncate">{{name}}</h1>
+                <p class="text-xl text-pink-400 mt-2 truncate">{{jobTitle}}</p>
+                <p class="text-gray-400 mt-4 max-w-2xl text-sm md:text-base line-clamp-3">{{about}}</p>
               </header>
               
               <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 space-y-6">
-                  <!--[[ExperienceTemplate=<div class="bg-gray-800/50 p-4 rounded border border-pink-500/20 mb-3"><h3 class="text-pink-400 text-lg">{{experience.designation}}</h3><p class="text-sm text-gray-400">{{experience.company}} | {{experience.duration}}</p></div>]]-->
+                  <!--[[ExperienceTemplate=<div class="bg-gray-800/50 p-4 rounded border border-pink-500/20 mb-3">
+                    <h3 class="text-pink-400 text-lg truncate">{{experience.designation}}</h3>
+                    <p class="text-sm text-gray-400 truncate">{{experience.company}} | {{experience.duration}}</p>
+                  </div>]]-->
                   <section class="bg-gray-800/50 p-4 md:p-6 rounded-lg backdrop-blur overflow-auto max-h-[500px]">
-                    <h2 class="text-xl md:text-2xl font-bold text-cyan-400 mb-4 py-2">Experience</h2>
+                    <h2 class="text-xl md:text-2xl font-bold text-cyan-400 mb-4 sticky top-0 bg-gray-800/95 py-2">Experience</h2>
                     {{experienceTemplate}}
                   </section>
                   
-                  <!--[[ProjectsTemplate=<div class="flex flex-col bg-gray-800/50 p-4 rounded border border-pink-500/20 mb-3"><h3 class="text-pink-400 text-lg">{{project.name}}</h3><p class="text-sm text-gray-400">{{project.description}}</p><a href="{{project.link}}" class="text-cyan-400 text-sm hover:text-cyan-300">View Project →</a></div>]]-->
+                  <!--[[ProjectsTemplate=<div class="bg-gray-800/50 p-4 rounded border border-pink-500/20 mb-3">
+                    <h3 class="text-pink-400 text-lg truncate">{{project.name}}</h3>
+                    <p class="text-sm text-gray-400 line-clamp-2">{{project.description}}</p>
+                    <a href="{{project.link}}" class="text-cyan-400 text-sm hover:text-cyan-300 truncate block">View Project →</a>
+                  </div>]]-->
                   <section class="bg-gray-800/50 p-4 md:p-6 rounded-lg backdrop-blur overflow-auto max-h-[500px]">
-                    <h2 class="text-xl font-bold text-cyan-400 mb-4 py-2">Projects</h2>
+                    <h2 class="text-xl md:text-2xl font-bold text-cyan-400 mb-4 sticky top-0 bg-gray-800/95 py-2">Projects</h2>
                     {{projectsTemplate}}
                   </section>
                 </div>
                 
                 <aside class="space-y-6">
-                  <!--[[SkillsTemplate=<span class="m-2 text-pink-400 text-sm ">{{skill}}</span>]]-->
+                  <!--[[SkillsTemplate=<span class="inline-block px-3 py-1 bg-pink-500/20 rounded-full text-pink-400 text-sm m-1 truncate max-w-full">{{skill}}</span>]]-->
                   <section class="bg-gray-800/50 p-4 md:p-6 rounded-lg backdrop-blur">
                     <h2 class="text-xl md:text-2xl font-bold text-cyan-400 mb-4">Skills</h2>
                     <div class="flex flex-wrap overflow-auto max-h-[200px]">
@@ -38,9 +45,16 @@ const resumeTemplates = [
                     </div>
                   </section>
     
-
+                  <!--[[EducationTemplate=<div class="mb-3">
+                    <h3 class="text-pink-400 truncate">{{education.type}}</h3>
+                    <p class="text-sm text-gray-400 truncate">{{education.name}} | GPA: {{education.cgpa}}</p>
+                  </div>]]-->
+                  <section class="bg-gray-800/50 p-4 md:p-6 rounded-lg backdrop-blur overflow-auto max-h-[300px]">
+                    <h2 class="text-xl md:text-2xl font-bold text-cyan-400 mb-4 sticky top-0 bg-gray-800/95 py-2">Education</h2>
+                    {{educationTemplate}}
+                  </section>
     
-                  <!--[[LanguagesTemplate=<span class="rounded-full text-cyan-400 text-sm m-1">{{language}}</span>]]-->
+                  <!--[[LanguagesTemplate=<span class="inline-block px-3 py-1 bg-cyan-500/20 rounded-full text-cyan-400 text-sm m-1 truncate max-w-full">{{language}}</span>]]-->
                   <section class="bg-gray-800/50 p-4 md:p-6 rounded-lg backdrop-blur">
                     <h2 class="text-xl md:text-2xl font-bold text-cyan-400 mb-4">Languages</h2>
                     <div class="flex flex-wrap overflow-auto max-h-[150px]">
@@ -48,30 +62,31 @@ const resumeTemplates = [
                     </div>
                   </section>
     
+                  <!--[[FrameworksTemplate=<span class="inline-block px-3 py-1 bg-blue-500/20 rounded-full text-blue-400 text-sm m-1 truncate max-w-full">{{framework}}</span>]]-->
+                  <section class="bg-gray-800/50 p-4 md:p-6 rounded-lg backdrop-blur">
+                    <h2 class="text-xl md:text-2xl font-bold text-cyan-400 mb-4">Frameworks</h2>
+                    <div class="flex flex-wrap overflow-auto max-h-[150px]">
+                      {{frameworksTemplate}}
+                    </div>
+                  </section>
     
-                  <!--[[LibrariesTemplate=<span class="rounded-full text-purple-400 text-sm m-1">{{library}}</span>]]-->
+                  <!--[[LibrariesTemplate=<span class="inline-block px-3 py-1 bg-purple-500/20 rounded-full text-purple-400 text-sm m-1 truncate max-w-full">{{library}}</span>]]-->
                   <section class="bg-gray-800/50 p-4 md:p-6 rounded-lg backdrop-blur">
                     <h2 class="text-xl md:text-2xl font-bold text-cyan-400 mb-4">Libraries</h2>
                     <div class="flex flex-wrap overflow-auto max-h-[150px]">
                       {{librariesTemplate}}
                     </div>
                   </section>
-                  
-                </aside>
-                
-              </div>
-              <footer class="bg-gray-800/50 p-4 rounded-lg mt-3">
-                    <div class="flex flex-row justify-between  items-center">
-                      <div class="space-y-2">
-                        <p class="text-gray-400 text-sm">Call me at <a href="tel:+1234567890" class="text-white hover:text-gray-300">{{phone}}</a></p>
-                        <p class="text-gray-400 text-sm">Or email me at <a href="mailto:{{email}}" class="text-white hover:text-gray-300">{{email}}</a></p>
-                      </div>
-                      <div class="space-y-2">
-                        <p class="text-gray-400 text-sm">You can also find me on <a href="{{github}}" class="text-white hover:text-gray-300">GitHub</a></p>
-                        <p class="text-gray-400 text-sm">Or connect with me on <a href="{{linkedin}}" class="text-white hover:text-gray-300">LinkedIn</a></p>
-                      </div>
+    
+                  <!--[[DeveloperToolsTemplate=<span class="inline-block px-3 py-1 bg-orange-500/20 rounded-full text-orange-400 text-sm m-1 truncate max-w-full">{{developerTool}}</span>]]-->
+                  <section class="bg-gray-800/50 p-4 md:p-6 rounded-lg backdrop-blur">
+                    <h2 class="text-xl md:text-2xl font-bold text-cyan-400 mb-4">Developer Tools</h2>
+                    <div class="flex flex-wrap overflow-auto max-h-[150px]">
+                      {{developerToolsTemplate}}
                     </div>
-                  </footer>
+                  </section>
+                </aside>
+              </div>
             </div>
           </div>
         `,
@@ -203,7 +218,11 @@ const resumeTemplates = [
                 {{experienceTemplate}}
               </section>
   
-              <!--[[ProjectsTemplate=<div class="mb-4 border-l-2 border-green-500/30 pl-4"><span class="text-green-300">$ {{project.name}}</span><p class="text-green-400/80">{{project.description}}</p><a href="{{project.link}}" class="text-green-500 hover:text-green-400">> View</a></div>]]-->
+              <!--[[ProjectsTemplate=<div class="mb-4 border-l-2 border-green-500/30 pl-4">
+                <span class="text-green-300">$ {{project.name}}</span>
+                <p class="text-green-400/80">{{project.description}}</p>
+                <a href="{{project.link}}" class="text-green-500 hover:text-green-400">> View</a>
+              </div>]]-->
               <section>
                 <h2 class="text-xl mb-4 text-green-300">$ cat projects.txt</h2>
                 {{projectsTemplate}}

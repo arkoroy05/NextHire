@@ -30,6 +30,14 @@ type UserData = {
   experience: Experience[];
   projectsTemplate: string;
   projects: Project[];
+  librariesTemplate: string;
+  libraries: string[];
+  developerToolsTemplate: string;
+  developerTools: string[];
+  frameworksTemplate: string;
+  frameworks: string[];
+  languagesTemplate: string;    
+  languages: string[];
 };
 
 const ResumeTemplate = ({
@@ -101,28 +109,39 @@ const ResumeTemplate = ({
         "ExperienceTemplate",
         "experience"
       );
-
       userData.projectsTemplate = parseTemplatefromObject(
         userData,
         "projects",
         "ProjectsTemplate",
         "project"
-      ).replace(
-        new RegExp(`{{project.description}}`, "g"),
-        parseTemplatefromArray(
-          userData,
-          "projects",
-          "ProjectDescriptionTemplate",
-          "project"
-        )
-      ).replace(
-        new RegExp(`{{project.links}}`, "g"),
-        parseTemplatefromArray(
-          userData,
-          "projects",
-          "ProjectLinkTemplate",
-          "project"
-        )
+      );
+
+      userData.librariesTemplate = parseTemplatefromArray(
+        userData,
+        "libraries",
+        "LibrariesTemplate",
+        "library"
+      );
+
+      userData.frameworksTemplate = parseTemplatefromArray(
+        userData,
+        "frameworks",
+        "FrameworksTemplate",
+        "framework"
+      );
+
+      userData.languagesTemplate = parseTemplatefromArray(
+        userData,
+        "languages",
+        "LanguagesTemplate",
+        "language"
+      );
+
+      userData.developerToolsTemplate = parseTemplatefromArray(
+        userData,
+        "developerTools",
+        "DeveloperToolsTemplate",
+        "developerTool"
       );
 
 
