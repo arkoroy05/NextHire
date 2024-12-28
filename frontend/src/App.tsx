@@ -5,6 +5,7 @@ import Form from './pages/Form';
 import Projects from './pages/Projects';
 import NavBar from './components/Nav';
 import Template from './pages/Template';
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
     return (
@@ -16,7 +17,9 @@ const App = () => {
         <main className="absolute top-[3rem] h-[calc(100vh-3rem)] w-full"><Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-       
+              
+                <Route path="/dashboard" element={<Dashboard />} />
+
                 <Route path="/form" element={<Form />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/templates/:id" element={<Template />} />
