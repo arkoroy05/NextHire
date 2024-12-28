@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://Arko:Arko1234@nexthirecluster.8zu9u.mongodb.net/', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect('mongodb+srv://Arko:Arko1234@nexthirecluster.8zu9u.mongodb.net/');
 
 // Main User Schema
 const userSchema = new mongoose.Schema({
-    name: { type: String, required: true },
+    name: { type: String, required: true ,maxlength: 30},
     phoneNumber: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     experience: { type: Number, required: true }, // in years
@@ -83,7 +80,7 @@ const educationAndSkillsSchema = new mongoose.Schema({
 const projectsSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Foreign key
     projectName: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String, required: true , maxlength: 500},
     link: { type: String }, 
 });
 
