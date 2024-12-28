@@ -70,12 +70,6 @@ function Template() {
         "Tailwind CSS",
         "Lodash",
         "Jest",
-        "Enzyme",
-        " ESLint",
-        "Prettier",
-        "TypeScript",
-        "Webpack",
-        "Babel",
       ],
       developerTools:[
         "Visual Studio Code",
@@ -108,6 +102,7 @@ function Template() {
 
   const saveAsPDF = () => {
     const element = document.getElementById("template");
+    element.style.zoom = "1";
     if (element) {
       html2pdf(element, {
         filename: "template.pdf",
@@ -167,7 +162,7 @@ function Template() {
                 <Download/>Save to PDF
               </Button>
 
-              <a href={`${Number(template.id) - 1}`}>
+              <a href={Number(template.id) <= 1 ? `/templates/1` : `${Number(template.id) - 1}`}>
                 <Button
                   variant="outline"
                   className="w-auto my-5 p-5 mx-2"
@@ -176,7 +171,11 @@ function Template() {
                   <ArrowLeft className="text-lime-500" /> Prev
                 </Button>
               </a>
-              <a href={`${Number(template.id) + 1}`}>
+              <a
+                href={
+                  Number(template.id) >= resumeTemplates.length ? "" : `${Number(template.id) + 1}`
+                }
+              >
                 <Button
                   variant="outline"
                   className="w-auto my-5 p-5 mx-2"
@@ -192,13 +191,13 @@ function Template() {
                   onClick={() => {
                     const element = document.getElementById("template");
                     if (element) {
-                      element.style.zoom = String(Number(element.style.zoom) + 0.05);
+                      const newZoom = Math.min(Number(element.style.zoom) + 0.05, 2);
+                      element.style.zoom = String(newZoom);
                     }
                   }}
                 >
-                                    <ZoomIn className="text-lime-500"></ZoomIn>
+                  <ZoomIn className="text-lime-500"></ZoomIn>
                   Zoom in
-
                 </Button>
                 <Button
                   className="w-auto p-5"
@@ -206,7 +205,8 @@ function Template() {
                   onClick={() => {
                     const element = document.getElementById("template");
                     if (element) {
-                      element.style.zoom = String(Number(element.style.zoom) - 0.05);
+                      const newZoom = Math.max(Number(element.style.zoom) - 0.05, 0.5);
+                      element.style.zoom = String(newZoom);
                     }
                   }}
                 >

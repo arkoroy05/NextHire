@@ -18,7 +18,6 @@ const App = () => {
         <main className="absolute top-[3rem] h-[calc(100vh-3rem)] w-full"><Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-              
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/user" element={<UserPage />} />
                 <Route path="/form" element={<Form />} />
