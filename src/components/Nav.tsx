@@ -3,7 +3,8 @@ const NavBar = () => {
   const links = [
     { name: "Home", href: "/", searchHref: "/" },
     { name: "Dashboard", href: "/dashboard", searchHref: "/dashboard" },
-    { name: "Form", href: "/form", searchHref: "/form" }
+    { name: "Form", href: "/form", searchHref: "/form" },
+    
   ];
 
   // Get current path from window location
