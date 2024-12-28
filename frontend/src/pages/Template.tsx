@@ -1,15 +1,16 @@
 import { useParams } from "react-router-dom";
-import items from "@/assets/data/testData";
-import { LucideStar, Download, ArrowLeft, ArrowRight } from "lucide-react";
+import resumeTempplates from "@/assets/data/testData";
+import { LucideStar, Download, ArrowLeft, ArrowRight, ZoomIn, ZoomOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Page from "@/components/Page";
 import ResumeTemplate from "@/components/ResumeTemplate";
 import html2pdf from "html2pdf.js";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import resumeTemplates from "@/assets/data/testData";
 
 function Template() {
   const { id } = useParams();
-  const template = items.find((template) => template.id === Number(id));
+  const template = resumeTemplates.find((template) => template.id === Number(id));
   const userData = {
     name: "John Doe",
     jobTitle: "Software Engineer",
@@ -32,47 +33,59 @@ function Template() {
       {
         id: 1,
         name: "E-Commerce Website",
-        description: [
+        description:
           "Developed a fully functional e-commerce website using React, Redux, and Node.js.",
-          "Implemented authentication using Passport.js and JWT.",
-          "Created a custom API using Node.js and Express.js.",
-        ],
-        links: [
-          "https://github.com/john-doe/e-commerce-website",
-          "https://www.linkedin.com/posts/john-doe_e-commerce-website-react-nodejs-activity-6923540415449603072-8v1j/",
-          "https://john-doe.com/e-commerce-website/",
-        ],
+        link: "https://github.com/john-doe/e-commerce-website",
       },
       {
         id: 2,
         name: "Chatbot",
-        description: [
+        description:
           "Developed a chatbot using Dialogflow and Node.js.",
-          "Integrated the chatbot with a custom API using Node.js and Express.js.",
-          "Implemented authentication using Passport.js and JWT.",
-        ],
-        links: [
-          "https://github.com/john-doe/chatbot",
-          "https://www.linkedin.com/posts/john-doe_chatbot-dialogflow-nodejs-activity-6934560415449603072-8v1j/",
-          "https://john-doe.com/chatbot/",
-        ],
-      },
-      {
-        id: 3,
-        name: "Portfolio Website",
-        description: [
-          "Developed a personal portfolio website using React and Next.js.",
-          "Implemented authentication using Passport.js and JWT.",
-          "Created a custom API using Node.js and Express.js.",
-        ],
-        links: [
-          "https://github.com/john-doe/portfolio-website",
-          "https://www.linkedin.com/posts/john-doe_portfolio-website-react-nextjs-activity-6945560415449603072-8v1j/",
-          "https://john-doe.com/portfolio-website/",
-        ],
+        link: "https://github.com/john-doe/chatbot",
       }],
+      libraries:[
+        "React",
+        "Redux",
+        "Node.js",
+        "MongoDB",
+        "Express",
+        "Next.js",
+        "Tailwind CSS",
+        "Lodash",
+        "Jest",
+        "Enzyme",
+        " ESLint",
+        "Prettier",
+        "TypeScript",
+        "Webpack",
+        "Babel",
+      ],
+      developerTools:[
+        "Visual Studio Code",
+        "Git",
+        "GitHub",
+        "npm",
+        "yarn",
+        "Prettier",
+        "ESLint",
+      ],
+      frameworks: [
+        "React",
+        "Next.js",
+        "Express",
+        "Redux",
+        "Node.js",
+      ],
+      languages: [
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "CSS",
+        "SQL",
+      ],
     about:
-      "Highly motivated and detail-oriented software engineer with 4+ years of experience in developing scalable and efficient web applications. Proficient in JavaScript, React, Node.js, and MongoDB. Possesses strong problem-solving skills and a passion for learning new technologies.",
+      "Highly motivated and detail-oriented software engineer with 4+ years of experience in developing scalable and efficient web applications. Proficient in JavaScript, React, Node.js, and MongoDB.",
     linkedinUrl: "https://www.linkedin.com/in/john-doe/",
     githubUrl: "https://github.com/john-doe",
   };
@@ -82,9 +95,11 @@ function Template() {
     if (element) {
       html2pdf(element, {
         filename: "template.pdf",
-        image: { type: "jpeg", quality: 1},
+        image: { type: "jpeg", quality: 0.98},
         html2canvas: {
-          scale: 1, // Adjust scale to fit content
+          scale: 1, // Use device scale for accurate rendering
+          dpi: 96, // Default DPI for web content
+          letterRendering: true
         },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait", margin: 0 },
       });
@@ -96,13 +111,14 @@ function Template() {
       {template ? (
         <div className="h-full grid grid-cols-[60%_1fr] text-white">
           <div className="w-full h-full page">
-            <ScrollArea className="w-calc(100vw-2rem) h-[75vh] mt-10 p-5 rounded-lg border border-neutral-500/50 ml-10 ">
+            <ScrollArea className="w-calc(100vw-3rem) h-[75vh] mt-10 p-5 rounded-lg border border-neutral-500/50 ml-10 overfloow-y-auto">
               <Page id="template">
                 <ResumeTemplate
                   userData={userData}
                   templateHtml={template.template}
                 />
               </Page>
+              <ScrollBar orientation="horizontal" />
             </ScrollArea>
           </div>
           <div>
@@ -148,11 +164,40 @@ function Template() {
                 <Button
                   variant="outline"
                   className="w-auto my-5 p-5 mx-2"
-                  disabled={Number(template.id) >= items.length}
+                  disabled={Number(template.id) >= resumeTemplates.length}
                 >
                   <ArrowRight className="text-lime-500" /> Next
                 </Button>
               </a>
+              <div className="flex gap-2 mt-2">
+                <Button
+                  className="w-auto p-5"
+                  variant="outline"
+                  onClick={() => {
+                    const element = document.getElementById("template");
+                    if (element) {
+                      element.style.zoom = String(Number(element.style.zoom) + 0.05);
+                    }
+                  }}
+                >
+                                    <ZoomIn className="text-lime-500"></ZoomIn>
+                  Zoom in
+
+                </Button>
+                <Button
+                  className="w-auto p-5"
+                  variant="outline"
+                  onClick={() => {
+                    const element = document.getElementById("template");
+                    if (element) {
+                      element.style.zoom = String(Number(element.style.zoom) - 0.05);
+                    }
+                  }}
+                >
+                  <ZoomOut className="text-lime-500"></ZoomOut>
+                  Zoom out
+                </Button>
+              </div>
             </div>
           </div>
         </div>

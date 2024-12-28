@@ -1,22 +1,29 @@
 import React, { HTMLAttributes } from 'react';
-interface PageProps extends HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
-  }
 
-const Page: React.FC<PageProps> = ({ children, ...props }) => {
+interface PageProps extends HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+}
+
+const Page: React.FC<PageProps> = ({ children, className = '', ...props }) => {
   return (
-    <div
-      {...props}
-      className="bg-white"
-      style={{
-        aspectRatio: '210 / 296.8',  // A4 aspect ratio (width / height)
-        width: '100%',             // Allows width to scale responsively
-        height: 'auto',            // Height auto adjusts to maintain the aspect 
-        overflow: 'auto',          // Allow scrolling if content overflows
-        margin: '0 auto',          // Center the page horizontally
-      }}
-    >
-      {children} {/* Render children here */}
+    <div className="flex justify-center w-full items-center">
+      <div
+        {...props}
+        className={`bg-white w-[210mm] h-[296.86mm] shadow-lg ${className}`}
+        style={{
+          // Fixed dimensions based on A4 paper size
+          minHeight: '296.86mm',
+          minWidth: '210mm',
+          maxWidth: '210mm',
+           // Standard document margins
+          boxSizing: 'border-box',
+          backgroundColor: 'white',
+          position: 'relative',
+          overflow: 'hidden' // Prevent content from bleeding outside the page
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 };

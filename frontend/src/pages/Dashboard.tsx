@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import items from "@/assets/data/testData";
+import resumeTemplates from "@/assets/data/testData";
 
 const Dashboard = () => {
  
@@ -18,7 +18,7 @@ const Dashboard = () => {
       </div>
       <ScrollArea className="w-full h-[calc(100vh-9rem)] mt-10 px-5">
         <div className="grid grid-cols-3 gap-2">
-            {items.map((item) => (
+            {resumeTemplates.map((item) => (
               <Card
                 className="w-auto hover:bg-neutral-800"
                 onClick={() => window.location.href = `/templates/${item.id}`}
