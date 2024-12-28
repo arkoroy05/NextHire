@@ -262,7 +262,7 @@ export default function Form() {
                     onClick={() => handleMultiSelect(field as 'languages' | 'frameworks' | 'developerTools' | 'libraries', item)}
                     className="text-primary-foreground hover:text-secondary-foreground"
                   >
-                    <X color='white' size={14} />
+                    <X color='black' size={14} />
                   </button>
                 </div>
               ))}
