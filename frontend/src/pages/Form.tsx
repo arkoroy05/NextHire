@@ -55,9 +55,8 @@ const libraryOptions = [
   "Prisma", "PostgreSQL", "Firebase",
 ];
 
-const userId = localStorage.getItem("userId");
-
 export default function Form() {
+  const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     education: [],

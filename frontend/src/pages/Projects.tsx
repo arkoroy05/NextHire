@@ -12,11 +12,14 @@ interface Project {
   link: string;
   description: string;
 }
-const userId= localStorage.getItem('userId');
 
 const Projects = () => {
+  const userId = localStorage.getItem('userId');
+  const navigate = useNavigate();
   const [projects, setProjects] = useState<Project[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const addProject = () => {
     const newProject: Project = {
@@ -42,29 +45,72 @@ const Projects = () => {
     }
   };
 
-  const navigate = useNavigate();
+  const handleSubmit = async () => {
+    if (!userId) {
+      setError('User ID not found. Please go back and fill in your details.');
+      return;
+    }
+
+    if (projects.length === 0) {
+      setError('Please add at least one project before proceeding.');
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setError(null);
+
+      // Submit all projects sequentially
+      for (const project of projects) {
+        if (!project.name.trim() || !project.description.trim()) {
+          throw new Error('Project name and description are required for all projects.');
+        }
+
+        await axios.post('http://localhost:3000/projects', {
+          userId,
+          projectName: project.name.trim(),
+          description: project.description.trim(),
+          link: project.link.trim()
+        });
+      }
+
+      navigate('/resume');
+    } catch (err) {
+      console.error('Error submitting projects:', err);
+      setError(err instanceof Error ? err.message : 'Failed to submit projects. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Projects</h1>
-        <Button type="submit" onClick={async () =>{ 
-        for (const project of projects) {
-          await axios.post('http://localhost:3000/projects', {
-            userId,
-            projectName: project.name,
-            description: project.description,
-            link: project.link
-          });
-        }
-        navigate('/dashboard');
-      }} className="bg-amber-200">
-        Proceed to view templates
-      </Button>
+        <Button 
+          type="submit" 
+          onClick={handleSubmit} 
+          className="bg-amber-200"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Submitting...' : 'Proceed to view templates'}
+        </Button>
       </header>
-      <Button className='mb-10 bg-amber-200' onClick={addProject}>
+
+      {error && (
+        <div className="mb-4 p-3 text-red-500 bg-red-100 rounded-md">
+          {error}
+        </div>
+      )}
+
+      <Button 
+        className='mb-10 bg-amber-200' 
+        onClick={addProject}
+        disabled={isSubmitting}
+      >
         <Plus className="mr-2 h-4 w-4" /> Add Project
       </Button>
+
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {projects.map(project => (
           <Card key={project.id} className="w-full text-amber-200">
@@ -74,6 +120,8 @@ const Projects = () => {
                   value={project.name}
                   onChange={(e) => updateProject(project.id, { name: e.target.value })}
                   className="font-semibold"
+                  placeholder="Project name"
+                  disabled={isSubmitting}
                 />
               ) : (
                 <CardTitle>{project.name}</CardTitle>
@@ -83,6 +131,7 @@ const Projects = () => {
                   variant="ghost"
                   size="sm"
                   onClick={() => setEditingId(editingId === project.id ? null : project.id)}
+                  disabled={isSubmitting}
                 >
                   {editingId === project.id ? <Check className="h-4 w-4" /> : <Edit2 className="h-4 w-4" />}
                 </Button>
@@ -90,6 +139,7 @@ const Projects = () => {
                   variant="ghost"
                   size="sm"
                   onClick={() => deleteProject(project.id)}
+                  disabled={isSubmitting}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -106,6 +156,7 @@ const Projects = () => {
                         value={project.link}
                         onChange={(e) => updateProject(project.id, { link: e.target.value })}
                         placeholder="Project link"
+                        disabled={isSubmitting}
                       />
                     ) : (
                       <a href={project.link} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
@@ -123,6 +174,7 @@ const Projects = () => {
                       placeholder="Project description"
                       className="w-full border rounded-md p-2 bg-black"
                       rows={4}
+                      disabled={isSubmitting}
                     />
                   ) : (
                     <p>{project.description || 'No description provided'}</p>

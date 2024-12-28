@@ -21,9 +21,14 @@ export default function UserForm() {
     email: '',
     experience: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
   };
 
   const validateForm = () => {
@@ -64,14 +69,50 @@ export default function UserForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('Form submitted:', formData);
-      const res = await axios.post('http://localhost:3000/user-info', formData);
-      localStorage.setItem('userId', res.data.user._id);
-      navigate('/form');
+    if (!validateForm() || isSubmitting) return;
+
+    try {
+      setIsSubmitting(true);
+      
+      // Convert experience to number before sending
+      const submitData = {
+        ...formData,
+        experience: Number(formData.experience)
+      };
+
+      const response = await axios.post('http://localhost:3000/user-info', submitData);
+      
+      if (response.data.userId) {
+        // Store the userId from the updated API response
+        localStorage.setItem('userId', response.data.userId);
+        navigate('/form');
+      } else if (response.data.user?._id) {
+        // Fallback for backward compatibility
+        localStorage.setItem('userId', response.data.user._id);
+        navigate('/form');
+      } else {
+        throw new Error('No valid user ID received from server');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      // Handle specific error cases
+      if (error.response?.data?.error) {
+        // If it's a validation error from the server
+        setErrors(prev => ({
+          ...prev,
+          submit: error.response.data.error
+        }));
+      } else {
+        // Generic error handling
+        setErrors(prev => ({
+          ...prev,
+          submit: 'Failed to submit form. Please try again.'
+        }));
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
 
   return (
     <div className="container mx-auto p-4 max-w-md">
@@ -121,8 +162,10 @@ export default function UserForm() {
           {errors.experience && <p className="text-red-500 text-sm">{errors.experience}</p>}
         </div>
 
-        <Button type="submit" className="w-full">
-          Submit
+        {errors.submit && <p className="text-red-500 text-sm mt-2">{errors.submit}</p>}
+
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </form>
     </div>
