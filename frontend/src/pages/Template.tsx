@@ -6,6 +6,22 @@ import Page from "@/components/Page";
 import ResumeTemplate from "@/components/ResumeTemplate";
 import html2pdf from "html2pdf.js";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import axios from "axios";
+
+const userId: string | null = localStorage.getItem('userId');
+
+const ResumeData = async() => {
+  try {
+    const res = await axios.get('http://localhost:3000/user', {
+      params: { userId }
+    });
+    const { user, projects, educationAndSkills } = res.data;
+    return { user, projects, educationAndSkills };
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+}
 
 function Template() {
   const { id } = useParams();

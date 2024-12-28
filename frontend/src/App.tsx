@@ -6,6 +6,7 @@ import Projects from './pages/Projects';
 import NavBar from './components/Nav';
 import Template from './pages/Template';
 import Dashboard from './pages/Dashboard';
+import UserPage from './pages/UserPage';
 
 const App = () => {
     return (
@@ -19,7 +20,7 @@ const App = () => {
                 <Route path="/" element={<Home />} />
               
                 <Route path="/dashboard" element={<Dashboard />} />
-
+                <Route path="/user" element={<UserPage />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/templates/:id" element={<Template />} />
