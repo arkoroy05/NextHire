@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Page from "@/components/Page";
 import ResumeTemplate from "@/components/ResumeTemplate";
+// @ts-ignore
 import html2pdf from "html2pdf.js";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import resumeTemplates from "@/assets/data/testData";
@@ -24,12 +25,12 @@ interface Education {
   _id: string;
 }
 
-interface Skills {
-  languages: string[];
-  frameworks: string[];
-  libraries: string[];
-  developerTools: string[];
-}
+// interface Skills {
+//   languages: string[];
+//   frameworks: string[];
+//   libraries: string[];
+//   developerTools: string[];
+// }
 
 interface Project {
   name: string;
@@ -74,7 +75,7 @@ const useResumeData = () => {
         }
 
         // Transform projects data from the updated API format
-        const transformedProjects = (data.projects || []).map((project) => ({
+        const transformedProjects = (data.projects || []).map((project: any) => ({
           name: project.projectName || "",
           description: project.description || "",
           link: project.link || "",

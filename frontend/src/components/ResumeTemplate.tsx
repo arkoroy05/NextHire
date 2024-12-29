@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
 
 type Education = {
-  level: "High School" | "College" | "Bachelor's Degree" | "Master's Degree" | "Ph.D.";
+  level:
+    | "High School"
+    | "College"
+    | "Bachelor's Degree"
+    | "Master's Degree"
+    | "Ph.D.";
   instituteName: string;
   CGPA: string;
   _id: string;
 };
-
+type Project = {
+  name: string;
+  description: string;
+  link?: string;
+};
 type UserData = {
   name: string;
   email: string;
@@ -36,24 +45,26 @@ const ResumeTemplate = ({
   useEffect(() => {
     const fillTemplate = async () => {
       // Transform the education data to match template format
-      const transformedEducation = userData.education.map(edu => ({
+      const transformedEducation = userData.education.map((edu) => ({
         type: edu.level,
         name: edu.instituteName,
-        cgpa: edu.CGPA
+        cgpa: edu.CGPA,
       }));
 
       // Transform experience data (assuming we need to create this from the experience number)
-      const transformedExperience = [{
-        designation: `Software Developer with ${userData.experience} years of experience`,
-        company: "Various Companies",
-        duration: `${userData.experience} years`
-      }];
+      const transformedExperience = [
+        {
+          designation: `Software Developer with ${userData.experience} years of experience`,
+          company: "Various Companies",
+          duration: `${userData.experience} years`,
+        },
+      ];
 
       // Transform projects data
-      const transformedProjects = userData.projects.map(project => ({
+      const transformedProjects = userData.projects.map((project) => ({
         name: project.name,
         description: project.description,
-        link: project.link || "#"
+        link: project.link || "#",
       }));
 
       const parseTemplatefromArray = (
@@ -61,18 +72,22 @@ const ResumeTemplate = ({
         templateidentifier: string,
         templateplaceholder: string
       ) => {
-        if (!Array.isArray(data)) return '';
-        
+        if (!Array.isArray(data)) return "";
+
         return data
           .map((item: string) => {
-            const template = templateHtml.match(
-              new RegExp(`<!--\\[\\[${templateidentifier}=(.*?)]]-->`)
-            )?.[1] || "";
-            return template.replace(new RegExp(`{{${templateplaceholder}}}`, "g"), item);
+            const template =
+              templateHtml.match(
+                new RegExp(`<!--\\[\\[${templateidentifier}=(.*?)]]-->`)
+              )?.[1] || "";
+            return template.replace(
+              new RegExp(`{{${templateplaceholder}}}`, "g"),
+              item
+            );
           })
           .join("");
       };
-    
+
       const parseTemplatefromObject = (
         data: any[],
         templateidentifier: string,
@@ -80,10 +95,11 @@ const ResumeTemplate = ({
       ) => {
         return data
           .map((item: any) => {
-            let template = templateHtml.match(
-              new RegExp(`<!--\\[\\[${templateidentifier}=(.*?)]]-->`)
-            )?.[1] || "";
-            
+            let template =
+              templateHtml.match(
+                new RegExp(`<!--\\[\\[${templateidentifier}=(.*?)]]-->`)
+              )?.[1] || "";
+
             for (const key in item) {
               template = template.replace(
                 new RegExp(`{{${templateplaceholder}.${key}}}`, "g"),
@@ -98,7 +114,9 @@ const ResumeTemplate = ({
       // Create a merged data object with all the transformed data
       const mergedData = {
         ...userData,
-        about: userData.about || `Experienced developer with ${userData.experience} years of experience`,
+        about:
+          userData.about ||
+          `Experienced developer with ${userData.experience} years of experience`,
         jobTitle: userData.jobTitle || "Software Developer",
         github: userData.github || "#",
         linkedin: userData.linkedin || "#",
@@ -107,13 +125,41 @@ const ResumeTemplate = ({
         education: transformedEducation,
         experience: transformedExperience,
         projects: transformedProjects,
-        skillsTemplate: parseTemplatefromArray(userData.languages, "SkillsTemplate", "skill"),
-        educationTemplate: parseTemplatefromObject(transformedEducation, "EducationTemplate", "education"),
-        experienceTemplate: parseTemplatefromObject(transformedExperience, "ExperienceTemplate", "experience"),
-        projectsTemplate: parseTemplatefromObject(transformedProjects, "ProjectsTemplate", "project"),
-        librariesTemplate: parseTemplatefromArray(userData.libraries, "LibrariesTemplate", "library"),
-        languagesTemplate: parseTemplatefromArray(userData.languages, "LanguagesTemplate", "language"),
-        developerToolsTemplate: parseTemplatefromArray(userData.developerTools, "DeveloperToolsTemplate", "developerTool")
+        skillsTemplate: parseTemplatefromArray(
+          userData.languages,
+          "SkillsTemplate",
+          "skill"
+        ),
+        educationTemplate: parseTemplatefromObject(
+          transformedEducation,
+          "EducationTemplate",
+          "education"
+        ),
+        experienceTemplate: parseTemplatefromObject(
+          transformedExperience,
+          "ExperienceTemplate",
+          "experience"
+        ),
+        projectsTemplate: parseTemplatefromObject(
+          transformedProjects,
+          "ProjectsTemplate",
+          "project"
+        ),
+        librariesTemplate: parseTemplatefromArray(
+          userData.libraries,
+          "LibrariesTemplate",
+          "library"
+        ),
+        languagesTemplate: parseTemplatefromArray(
+          userData.languages,
+          "LanguagesTemplate",
+          "language"
+        ),
+        developerToolsTemplate: parseTemplatefromArray(
+          userData.developerTools,
+          "DeveloperToolsTemplate",
+          "developerTool"
+        ),
       };
 
       let filledTemplate = templateHtml;
@@ -132,10 +178,7 @@ const ResumeTemplate = ({
   if (!template) return <div>Loading...</div>;
 
   return (
-    <div
-      dangerouslySetInnerHTML={{ __html: template }}
-      className="h-full"
-    />
+    <div dangerouslySetInnerHTML={{ __html: template }} className="h-full" />
   );
 };
 
