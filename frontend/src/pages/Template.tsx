@@ -1,5 +1,12 @@
-import { useParams } from "react-router-dom";
-import { LucideStar, Download, ArrowLeft, ArrowRight, ZoomIn, ZoomOut } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  LucideStar,
+  Download,
+  ArrowLeft,
+  ArrowRight,
+  ZoomIn,
+  ZoomOut,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Page from "@/components/Page";
 import ResumeTemplate from "@/components/ResumeTemplate";
@@ -9,9 +16,9 @@ import resumeTemplates from "@/assets/data/testData";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-// DO NOT ADD ANY CONSOLE.LOG() TO THIS FILE(use full one is there)
+// DO NOT ADD ANY CONSOLE.LOG() TO THIS FILE (use full one is there)
 interface Education {
-  level: 'High School' | 'College' | "Bachelor's Degree" | "Master's Degree" | 'Ph.D.';
+  level: "High School" | "College" | "Bachelor's Degree" | "Master's Degree" | "Ph.D.";
   instituteName: string;
   CGPA: string;
   _id: string;
@@ -51,53 +58,53 @@ const useResumeData = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userId = localStorage.getItem('userId');
+      const userId = localStorage.getItem("userId");
       if (!userId) {
-        setError('No user ID found. Please complete your profile first.');
+        setError("No user ID found. Please complete your profile first.");
         setIsLoading(false);
         return;
       }
 
       try {
         const { data } = await axios.get(`http://localhost:3000/user?userId=${userId}`);
-        
+
         // Validate required data
         if (!data.user) {
-          throw new Error('User data not found');
+          throw new Error("User data not found");
         }
 
         // Transform projects data from the updated API format
-        const transformedProjects = (data.projects || []).map(project => ({
-          name: project.projectName || '',
-          description: project.description || '',
-          link: project.link || ''
+        const transformedProjects = (data.projects || []).map((project) => ({
+          name: project.projectName || "",
+          description: project.description || "",
+          link: project.link || "",
         }));
 
         // Transform education and skills data from the updated API format
         const transformedUserData = {
-          name: data.user.name || '',
-          email: data.user.email || '',
-          phoneNumber: data.user.phoneNumber || '',
+          name: data.user.name || "",
+          email: data.user.email || "",
+          phoneNumber: data.user.phoneNumber || "",
           experience: data.user.experience || 0,
           education: data.educationAndSkills?.education || [],
           languages: data.educationAndSkills?.skills?.languages || [],
           frameworks: data.educationAndSkills?.skills?.frameworks || [],
           libraries: data.educationAndSkills?.skills?.libraries || [],
           developerTools: data.educationAndSkills?.skills?.developerTools || [],
-          projects: transformedProjects
+          projects: transformedProjects,
         };
 
         setUserData(transformedUserData);
-        //do not remove this console.log()
-        console.log('Fetched data:', data);
+        // Do not remove this console.log()
+        console.log("Fetched data:", data);
       } catch (err) {
-        console.error('Error fetching data:', err);
+        console.error("Error fetching data:", err);
         setError(
-          err instanceof Error 
-            ? `Error: ${err.message}` 
-            : 'Failed to fetch resume data. Please try again.'
+          err instanceof Error
+            ? `Error: ${err.message}`
+            : "Failed to fetch resume data. Please try again."
         );
-      } finally { 
+      } finally {
         setIsLoading(false);
       }
     };
@@ -112,9 +119,9 @@ const useResumeData = () => {
 const generatePDF = () => {
   const element = document.getElementById("template");
   if (!element) return;
-  
+
   element.style.zoom = "1";
-  
+
   const options = {
     filename: "resume.pdf",
     image: { type: "jpeg", quality: 0.98 },
@@ -122,14 +129,14 @@ const generatePDF = () => {
       scale: 2,
       dpi: 192,
       letterRendering: true,
-      useCORS: true
+      useCORS: true,
     },
-    jsPDF: { 
-      unit: "mm", 
-      format: "a4", 
-      orientation: "portrait", 
-      margin: 0 
-    }
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "portrait",
+      margin: 0,
+    },
   };
 
   html2pdf(element, options);
@@ -139,8 +146,8 @@ const generatePDF = () => {
 const useZoom = (initialZoom = 1) => {
   const [zoom, setZoom] = useState(initialZoom);
 
-  const zoomIn = () => setZoom(prev => Math.min(prev + 0.05, 2));
-  const zoomOut = () => setZoom(prev => Math.max(prev - 0.05, 0.5));
+  const zoomIn = () => setZoom((prev) => Math.min(prev + 0.05, 2));
+  const zoomOut = () => setZoom((prev) => Math.max(prev - 0.05, 0.5));
 
   useEffect(() => {
     const element = document.getElementById("template");
@@ -156,9 +163,10 @@ function Template() {
   const { id } = useParams();
   const { userData, isLoading, error } = useResumeData();
   const { zoomIn, zoomOut } = useZoom();
-  
-  const template = resumeTemplates.find(template => template.id === Number(id));
-  
+  const navigate = useNavigate();
+
+  const template = resumeTemplates.find((template) => template.id === Number(id));
+
   if (isLoading) {
     return <h1 className="font-bold text-3xl m-10">Loading resume data...</h1>;
   }
@@ -167,9 +175,9 @@ function Template() {
     return (
       <div className="m-10">
         <h1 className="font-bold text-3xl mb-4">
-          {!template ? 'Template not found' : error}
+          {!template ? "Template not found" : error}
         </h1>
-        {error && error.includes('No user ID found') && (
+        {error && error.includes("No user ID found") && (
           <p className="text-neutral-400">
             Please complete your profile before accessing the templates.
           </p>
@@ -183,10 +191,7 @@ function Template() {
       <div className="w-full h-full page">
         <ScrollArea className="w-calc(100vw-3rem) h-[75vh] mt-10 p-5 rounded-lg border border-neutral-500/50 ml-10">
           <Page id="template">
-            <ResumeTemplate
-              userData={userData}
-              templateHtml={template.template}
-            />
+            <ResumeTemplate userData={userData} templateHtml={template.template} />
           </Page>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
@@ -195,7 +200,7 @@ function Template() {
       <div>
         <h1 className="font-bold text-3xl m-10 mb-0">{template.name}</h1>
         <p className="text-neutral-400 m-10 my-2 mb-4 text-lg">{template.desc}</p>
-        
+
         <div className="m-10 mt-0">
           {[1, 2, 3, 4, 5].map((i) => (
             <LucideStar
@@ -205,17 +210,21 @@ function Template() {
               }`}
             />
           ))}
-          
+
           <div className="tags flex gap-2 mt-2">
             {template.tags.map((tag, index) => (
-              <div key={index} className="text-neutral-400 border border-neutral-200/40 font-medium p-2 rounded-md">
+              <div
+                key={index}
+                className="text-neutral-400 border border-neutral-200/40 font-medium p-2 rounded-md"
+              >
                 {tag}
               </div>
             ))}
           </div>
 
           <Button className="w-auto my-5 p-5 mr-2" onClick={generatePDF}>
-            <Download />Save to PDF
+            <Download />
+            Save to PDF
           </Button>
 
           <div className="flex gap-2">
@@ -223,27 +232,31 @@ function Template() {
               variant="outline"
               className="w-auto p-5"
               disabled={Number(id) <= 1}
-              href={`/templates/${Math.max(1, Number(id) - 1)}`}
+              onClick={() => navigate(`/templates/${Math.max(1, Number(id) - 1)}`)}
             >
-              <ArrowLeft className="text-lime-500" /> Prev
+              <ArrowLeft className="text-lime-500" />
+              Prev
             </Button>
 
             <Button
               variant="outline"
               className="w-auto p-5"
               disabled={Number(id) >= resumeTemplates.length}
-              href={`/templates/${Math.min(resumeTemplates.length, Number(id) + 1)}`}
+              onClick={() => navigate(`/templates/${Math.min(resumeTemplates.length, Number(id) + 1)}`)}
             >
-              <ArrowRight className="text-lime-500" /> Next
+              <ArrowRight className="text-lime-500" />
+              Next
             </Button>
           </div>
 
           <div className="flex gap-2 mt-2">
             <Button className="w-auto p-5" variant="outline" onClick={zoomIn}>
-              <ZoomIn className="text-lime-500" />Zoom in
+              <ZoomIn className="text-lime-500" />
+              Zoom in
             </Button>
             <Button className="w-auto p-5" variant="outline" onClick={zoomOut}>
-              <ZoomOut className="text-lime-500" />Zoom out
+              <ZoomOut className="text-lime-500" />
+              Zoom out
             </Button>
           </div>
         </div>
