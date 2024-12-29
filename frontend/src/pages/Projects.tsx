@@ -74,7 +74,7 @@ const Projects = () => {
         });
       }
 
-      navigate('/templates/1');
+      navigate('/dashboard');
     } catch (err) {
       console.error('Error submitting projects:', err);
       setError(err instanceof Error ? err.message : 'Failed to submit projects. Please try again.');

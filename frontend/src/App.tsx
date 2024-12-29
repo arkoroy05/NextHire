@@ -12,7 +12,7 @@ const App = () => {
     return (
       <html lang="en">
       <body
-        className={`text-lime-500 h-screen font-sans  `}
+        className={`text-neutral-100 h-screen font-sans`}
       >
         <NavBar />
         <main className="absolute top-[3rem] h-[calc(100vh-3rem)] w-full"><Router>

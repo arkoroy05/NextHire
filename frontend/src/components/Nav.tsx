@@ -19,7 +19,8 @@ const NavBar = () => {
   return (
     <div className="fixed left-0 top-0 w-full h-[3rem]  backdrop-blur-[20rem] z-[99] flex items-center justify-between p-5 pl-3 border-b border-neutral-800/20">
       <a href="/">
-        <img src="/images/icon.png" className="w-10 h-10" alt="Logo" />
+
+        <h1 className="text-2xl font-light font-mono text-lime-400">NEXTHIRE</h1>
       </a>
       
       <nav className="flex items-center gap-7">
