@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://Arko:Arko1234@nexthirecluster.8zu9u.mongodb.net/");
+mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}${process.env.DB_CLUSTER}.8zu9u.mongodb.net/`);
 
 
 // Main User Schema
