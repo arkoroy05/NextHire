@@ -116,8 +116,8 @@ const resumeTemplates = [
                   <div>
                     <h2 class="text-2xl font-bold mb-3">Languages</h2>
                     <div class="flex flex-wrap gap-2">
-                      <!--[[LanguagesTemplate=<span class="bg-gray-100 px-3 py-1 rounded-full text-gray-700 text-sm">{{language}}</span>]]-->
-                      {{languagesTemplate}}
+                      <!--[[SkillsTemplate=<span class="bg-gray-100 px-3 py-1 rounded-full text-gray-700 text-sm">{{language}}</span>]]-->
+                      {{skillsTemplate}}
                     </div>
                   </div>
 
