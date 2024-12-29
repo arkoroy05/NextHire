@@ -1,7 +1,8 @@
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-import { Button } from "@/components/ui/button";
+
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
-import { TrendingUp, Settings2, Loader } from "lucide-react";
+import { TrendingUp, Settings2, Loader, ArrowRight } from "lucide-react";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 export default function Home() {
   return (
@@ -56,21 +57,26 @@ export default function Home() {
           <h1 className="text-lg font-light">
             Aesthetic resumes at your disposal.
           </h1>
-          <Button
-            variant={"outline"}
-            className="text-lg font-medium font-sans text-neutral-300 pointer-events-auto"
-            onClick={() => (window.location.href = "/user")}
-          >
-            Get Started{" "}
-          </Button>
+
+          <HoverBorderGradient
+        containerClassName="rounded-full"
+        as="button"
+        className="dark:bg-neutral-950 bg-white text-black dark:text-white flex items-center space-x-2 pointer-events-auto px-4 py-3"
+        onClick={() => (window.location.href = "/user")}
+      >
+
+        <span>Get Started</span><ArrowRight/>
+      </HoverBorderGradient>
+
+      
           <div className="flex flex-row m-0 font-bold gap-5 h-[calc(30vh)] pointer-events-auto">
             <CardContainer className="inter-var backdrop-blur-[0.2rem] bg-transparent">
-              <CardBody className="h-40 w-60 bg-transparent text-sm flex flex-col items-center justify-center p-5 relative group/card dark:hover:shadow-2xl dark:hover:shadow-lime-500/[0.1] border border-neutral-500/50 rounded-lg">
+              <CardBody className="h-30 w-50 bg-transparent text-sm flex flex-col items-center justify-center p-5 relative group/card dark:hover:shadow-2xl dark:hover:shadow-lime-500/[0.1] border border-neutral-500/50 rounded-lg">
                 <CardItem
                   translateZ="50"
                   className="text-xl font-bold text-neutral-600 dark:text-white"
                 >
-                  <TrendingUp className="h-20 w-20" />
+                  <TrendingUp className="h-12 w-12 text-lime-600 " />
                 </CardItem>
                 <CardItem
                   as="p"
@@ -82,12 +88,12 @@ export default function Home() {
               </CardBody>
             </CardContainer>
             <CardContainer className="inter-var backdrop-blur-[0.1rem] bg-transparent">
-              <CardBody className="h-40 w-60  text-sm flex flex-col items-center justify-center p-5 relative group/card dark:hover:shadow-2xl dark:hover:shadow-lime-500/[0.1] border border-neutral-500/50 rounded-lg">
+              <CardBody className="h-30 w-50  text-sm flex flex-col items-center justify-center p-5 relative group/card dark:hover:shadow-2xl dark:hover:shadow-lime-500/[0.1] border border-neutral-500/50 rounded-lg">
                 <CardItem
                   translateZ="50"
                   className="text-xl font-bold text-neutral-600 dark:text-white"
                 >
-                  <Loader className="h-20 w-20 " />
+                  <Loader className=" h-12 w-12 text-lime-600 " />
                 </CardItem>
                 <CardItem
                   as="p"
@@ -99,12 +105,12 @@ export default function Home() {
               </CardBody>
             </CardContainer>
             <CardContainer className="inter-var backdrop-blur-[0.1rem] bg-transparent">
-              <CardBody className="h-40 w-60 text-sm flex flex-col items-center justify-center p-5 relative group/card dark:hover:shadow-2xl dark:hover:shadow-lime-500/[0.1] border border-neutral-500/50 rounded-lg">
+              <CardBody className="h-30 w-50 text-sm flex flex-col items-center justify-center p-5 relative group/card dark:hover:shadow-2xl dark:hover:shadow-lime-500/[0.1] border border-neutral-500/50 rounded-lg">
                 <CardItem
                   translateZ="50"
                   className="text-xl font-bold text-neutral-600 dark:text-white"
                 >
-                  <Settings2 className="h-20 w-20 " />
+                  <Settings2 className="h-12 w-12 text-lime-600 " />
                 </CardItem>
                 <CardItem
                   as="p"

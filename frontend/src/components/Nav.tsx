@@ -1,9 +1,7 @@
 
 const NavBar = () => {
   const links = [
-    { name: "Home", href: "/", searchHref: "/" },
-    { name: "Get Started", href: "/user", searchHref: "/user" },
-    
+    { name: "Home", href: "/", searchHref: "/" },    
   ];
 
   // Get current path from window location
@@ -17,7 +15,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="fixed left-0 top-0 w-full h-[3rem]  backdrop-blur-[20rem] z-[99] flex items-center justify-between p-5 pl-3 border-b border-neutral-800/20">
+    <div className="fixed left-0 top-0 w-full h-[3.5rem]  backdrop-blur-[20rem] z-[99] flex items-center justify-between p-2 pl-3 border-b border-neutral-800/20">
       <a href="/">
 
         <h1 className="text-2xl font-light font-mono text-lime-400">NEXTHIRE</h1>
@@ -38,6 +36,9 @@ const NavBar = () => {
             {item.name}
           </a>
         ))}
+                  <button className="inline-flex h-auto p-2 px-3 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] font-medium pointer-events-auto hover:border-lime-700/70" onClick={() => (window.location.href = "/user")}>
+        Get Started
+      </button>
       </nav>
     </div>
   );
