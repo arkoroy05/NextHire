@@ -71,7 +71,7 @@ const Projects = () => {
           );
         }
 
-        await axios.post("http://localhost:3000/projects", {
+        await axios.post("https://nexthire-y8qz.onrender.com/projects", {
           userId,
           projectName: project.name.trim(),
           description: project.description.trim(),

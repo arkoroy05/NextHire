@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
+
 const corsOptions = {
-    origin: "https://nexthire-18ec.onrender.com", 
+    origin: "https://nexthire-webapp.onrender.com", 
 }
 const cors = require('cors');
 const mongoose = require('mongoose');

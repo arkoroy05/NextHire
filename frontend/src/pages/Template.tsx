@@ -67,7 +67,7 @@ const useResumeData = () => {
       }
 
       try {
-        const { data } = await axios.get(`http://localhost:3000/user?userId=${userId}`);
+        const { data } = await axios.get(`https://nexthire-y8qz.onrender.com/user?userId=${userId}`);
 
         // Validate required data
         if (!data.user) {

@@ -6,7 +6,7 @@ import NavBar from './components/Nav';
 import Template from './pages/Template';
 import Dashboard from './pages/Dashboard';
 import UserPage from './pages/UserPage';
-import Test from './pages/Test';
+
 
 const App = () => {
     return (
@@ -19,7 +19,6 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/test" element={<Test />} />
                 <Route path="/user" element={<UserPage />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/projects" element={<Projects />} />

@@ -276,7 +276,7 @@ export default function Form() {
     };
 
     axios
-      .post("http://localhost:3000/form", payload)
+      .post("https://nexthire-y8qz.onrender.com/form", payload)
       .then(() => navigate("/projects"))
       .catch((error) => {
         const errorMessage = error.response?.data?.message || error.message;
