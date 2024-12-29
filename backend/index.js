@@ -140,7 +140,7 @@ app.get("/user", async (req, res) => {
 });
 
 
-const port = process.env.REACT_APP_PORT || 3000;
+const port = 3000;
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);    
 });
