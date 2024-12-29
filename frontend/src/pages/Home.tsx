@@ -48,7 +48,7 @@ export default function Home() {
         <p className="font-mono text-neutral-400 text-[calc(100vh/15)] font-light">
           Aesthetic resumes at your disposal.
         </p>
-        <Button variant={"outline"} className="w-auto my-5 p-8 mr-2 text-3xl font-bold font-mono text-neutral-300" onClick={() => window.location.href = '/form'}>Build your resume today {">"} </Button>
+        <Button variant={"outline"} className="w-auto my-5 p-8 mr-2 text-3xl font-bold font-mono text-neutral-300" onClick={() => window.location.href = '/user'}>Build your resume today {">"} </Button>
 
       </div>
       

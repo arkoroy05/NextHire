@@ -2,7 +2,7 @@
 const NavBar = () => {
   const links = [
     { name: "Home", href: "/", searchHref: "/" },
-    { name: "Get Started", href: "/form", searchHref: "/form" },
+    { name: "Get Started", href: "/user", searchHref: "/user" },
     
   ];
 
