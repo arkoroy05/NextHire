@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { User, EducationAndSkills, Projects } = require('./db');
@@ -139,7 +140,7 @@ app.get("/user", async (req, res) => {
 });
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.REACT_APP_PORT || 3000;
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);    
 });

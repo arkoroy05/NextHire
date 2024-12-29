@@ -1,7 +1,20 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-// Connect to MongoDB
-mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}${process.env.DB_CLUSTER}.8zu9u.mongodb.net/`);
+
+
+
+mongoose.connect(
+    `mongodb+srv://${process.env.REACT_APP_DB_USERNAME}:${process.env.REACT_APP_DB_PASSWORD}@nexthirecluster.8zu9u.mongodb.net/?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
+  )
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+
 
 
 // Main User Schema
