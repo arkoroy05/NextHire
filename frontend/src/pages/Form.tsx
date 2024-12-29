@@ -382,7 +382,7 @@ export default function Form() {
                       <div key={option} className="flex items-center space-x-2">
                         <Checkbox
                           id={`${field}-${option}`}
-                          checked={formData[field as keyof FormData].includes(
+                          checked={formData[field as MultiSelectField].includes(
                             option
                           )}
                           onCheckedChange={() =>
