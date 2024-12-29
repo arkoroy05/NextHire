@@ -21,10 +21,11 @@ export default function UserForm() {
     phoneNumber: "",
     email: "",
     experience: "",
+    submit: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (field, value) => {
+  const handleChange = (field: keyof typeof userInitialData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
@@ -39,6 +40,7 @@ export default function UserForm() {
       phoneNumber: "",
       email: "",
       experience: "",
+      submit: "",
     };
 
     if (!formData.name.trim()) {
@@ -68,7 +70,7 @@ export default function UserForm() {
     return isValid;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm() || isSubmitting) return;
 
@@ -97,7 +99,7 @@ export default function UserForm() {
       } else {
         throw new Error("No valid user ID received from server");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Submission error:", error);
       // Handle specific error cases
       if (error.response?.data?.error) {
