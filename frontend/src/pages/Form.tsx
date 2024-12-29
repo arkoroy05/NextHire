@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 
+type MultiSelectField = "languages" | "frameworks" | "developerTools" | "libraries";
 type Education = {
   level: string;
   institution: string;
@@ -381,7 +381,7 @@ export default function Form() {
                       <div key={option} className="flex items-center space-x-2">
                         <Checkbox
                           id={`${field}-${option}`}
-                          checked={formData[field as keyof FormData].includes(
+                          checked={formData[field as MultiSelectField].includes(
                             option
                           )}
                           onCheckedChange={() =>
