@@ -1,11 +1,14 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
+const corsOptions = {
+    origin: "https://nexthire-18ec.onrender.com", 
+}
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { User, EducationAndSkills, Projects } = require('./db');
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Helper function to validate ObjectId
