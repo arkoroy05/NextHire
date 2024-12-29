@@ -6,12 +6,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 
-type MultiSelectField = "languages" | "frameworks" | "developerTools" | "libraries";
 type Education = {
   level: string;
   institution: string;
   cgpa: string;
 };
+type MultiSelectField = "languages" | "frameworks" | "developerTools" | "libraries";
+
 
 type FormData = {
   education: Education[];
@@ -381,11 +382,11 @@ export default function Form() {
                       <div key={option} className="flex items-center space-x-2">
                         <Checkbox
                           id={`${field}-${option}`}
-                          checked={formData[field as MultiSelectField].includes(
+                          checked={formData[field as keyof FormData].includes(
                             option
                           )}
                           onCheckedChange={() =>
-                            handleMultiSelect(field as any, option)
+                            handleMultiSelect(field as MultiSelectField, option)
                           }
                         />
                         <label htmlFor={`${field}-${option}`}>{option}</label>
