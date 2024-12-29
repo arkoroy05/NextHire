@@ -88,6 +88,8 @@ const useResumeData = () => {
         };
 
         setUserData(transformedUserData);
+        //do not remove this console.log()
+        console.log('Fetched data:', data);
       } catch (err) {
         console.error('Error fetching data:', err);
         setError(
@@ -95,8 +97,7 @@ const useResumeData = () => {
             ? `Error: ${err.message}` 
             : 'Failed to fetch resume data. Please try again.'
         );
-      } finally {
-        console.log('Fetching data completed.', userData);  
+      } finally { 
         setIsLoading(false);
       }
     };
