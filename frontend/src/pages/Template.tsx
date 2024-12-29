@@ -9,7 +9,7 @@ import resumeTemplates from "@/assets/data/testData";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-// Define types
+// DO NOT ADD ANY CONSOLE.LOG() TO THIS FILE(use full one is there)
 interface Education {
   level: 'High School' | 'College' | "Bachelor's Degree" | "Master's Degree" | 'Ph.D.';
   instituteName: string;
