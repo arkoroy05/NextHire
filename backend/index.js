@@ -81,7 +81,7 @@ app.post("/projects", async (req, res) => {
         
         // Validate userId
         if (!isValidObjectId(userId)) {
-            return res.status(400).json({ error: "Invalid userId format" });
+            return res.status(400).json({ error: "Invalid user" });
         }
 
         // Check if user exists
@@ -103,7 +103,7 @@ app.post("/projects", async (req, res) => {
             project
         });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: "we might have some issues" });
     }
 });
 

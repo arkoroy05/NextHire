@@ -146,42 +146,43 @@ const Projects = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-sm font-medium">Link</h3>
-                  <div className="flex items-center space-x-2">
-                    <LinkIcon className="h-4 w-4" />
-                    {editingId === project.id ? (
-                      <Input
-                        value={project.link}
-                        onChange={(e) => updateProject(project.id, { link: e.target.value })}
-                        placeholder="Project link"
-                        disabled={isSubmitting}
-                      />
-                    ) : (
-                      <a href={project.link} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
-                        {project.link || 'No link provided'}
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-sm font-medium">Description</h3>
-                  {editingId === project.id ? (
-                    <textarea
-                      value={project.description}
-                      onChange={(e) => updateProject(project.id, { description: e.target.value })}
-                      placeholder="Project description"
-                      className="w-full border rounded-md p-2 bg-black"
-                      rows={4}
-                      disabled={isSubmitting}
-                    />
-                  ) : (
-                    <p>{project.description || 'No description provided'}</p>
-                  )}
-                </div>
-              </div>
-            </CardContent>
+  <div className="space-y-4">
+    <div className="space-y-2">
+      <h3 className="text-sm font-medium">Link</h3>
+      <div className="flex items-center space-x-2">
+        <LinkIcon className="h-4 w-4" />
+        {editingId === project.id ? (
+          <Input
+            value={project.link}
+            onChange={(e) => updateProject(project.id, { link: e.target.value })}
+            placeholder="Project link"
+            disabled={isSubmitting}
+          />
+        ) : (
+          <a href={project.link} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
+            {project.link || 'No link provided'}
+          </a>
+        )}
+      </div>
+    </div>
+    <div className="space-y-2">
+      <h3 className="text-sm font-medium">Description</h3>
+      {editingId === project.id ? (
+        <textarea
+          value={project.description}
+          onChange={(e) => updateProject(project.id, { description: e.target.value })}
+          placeholder="Explain what the project is about in short"
+          className="w-full border rounded-md p-2 bg-black"
+          rows={4}
+          disabled={isSubmitting}
+        />
+      ) : (
+        <p className="line-clamp-2">{project.description || 'No description provided'}</p>
+      )}
+    </div>
+  </div>
+</CardContent>
+
           </Card>
         ))}
       </div>
