@@ -5,11 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build-alt": "tsc -b && vite build",
+    "build": "tsc -b && vite build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview --host"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.1.3",
