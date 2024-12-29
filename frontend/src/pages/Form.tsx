@@ -5,6 +5,8 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { TextHoverEffect } from "@/components/ui/text-hover-effect";
+
 
 type Education = {
   level: string;
@@ -185,96 +187,98 @@ export default function Form() {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-2xl">
-      <h1 className="text-4xl font-bold mb-6">Developer Profile</h1>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <div className="text-xl font-bold mb-4">Education</div>
-          {educationOptions.map((option) => (
-            <div key={option.id} className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id={option.id}
-                  checked={formData.education.some((edu) => edu.level === option.label)}
-                  onCheckedChange={(checked) => handleEducationChange(option.label, checked as boolean)}
-                />
-                <label htmlFor={option.id}>{option.label}</label>
-              </div>
-              {formData.education.some((edu) => edu.level === option.label) && (
-                <div className="ml-6 space-y-2">
-                  <Input
-                    placeholder="Institution name"
-                    value={formData.education.find((edu) => edu.level === option.label)?.institution || ""}
-                    onChange={(e) => handleEducationDetailChange(option.label, "institution", e.target.value)}
-                    className={errorMessages.education ? "border-red-500" : ""}
+    <div className="flex justify-center">
+      <div className="container mx-auto p-4 max-w-2xl border bg-neutral-900/40 backdrop-blur-[0.4rem] z-50 border-lime-500/50 rounded-lg m-5">
+        <h1 className="text-4xl font-bold mb-6 text-lime-500">Developer Profile</h1>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <div className="text-xl font-bold mb-4">Education</div>
+            {educationOptions.map((option) => (
+              <div key={option.id} className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id={option.id}
+                    checked={formData.education.some((edu) => edu.level === option.label)}
+                    onCheckedChange={(checked) => handleEducationChange(option.label, checked as boolean)}
                   />
-                  <Input
-                    placeholder="CGPA"
-                    value={formData.education.find((edu) => edu.level === option.label)?.cgpa || ""}
-                    onChange={(e) => handleEducationDetailChange(option.label, "cgpa", e.target.value)}
-                    className={errorMessages.education ? "border-red-500" : ""}
-                  />
+                  <label htmlFor={option.id}>{option.label}</label>
                 </div>
-              )}
+                {formData.education.some((edu) => edu.level === option.label) && (
+                  <div className="ml-6 space-y-2">
+                    <Input
+                      placeholder="Institution name"
+                      value={formData.education.find((edu) => edu.level === option.label)?.institution || ""}
+                      onChange={(e) => handleEducationDetailChange(option.label, "institution", e.target.value)}
+                      className={errorMessages.education ? "border-red-500" : ""}
+                    />
+                    <Input
+                      placeholder="CGPA"
+                      value={formData.education.find((edu) => edu.level === option.label)?.cgpa || ""}
+                      onChange={(e) => handleEducationDetailChange(option.label, "cgpa", e.target.value)}
+                      className={errorMessages.education ? "border-red-500" : ""}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+            {errorMessages.education && <div className="text-red-500 text-sm">{errorMessages.education}</div>}
+          </div>
+          {["languages", "frameworks", "developerTools", "libraries"].map((field) => (
+            <div key={field}>
+              <div className="text-xl font-bold mb-4">
+                {field.charAt(0).toUpperCase() + field.slice(1)}
+              </div>
+              <div className="grid grid-cols-4 gap-5 mb-2">
+                {(field === "languages"
+                  ? languageOptions
+                  : field === "frameworks"
+                  ? frameworkOptions
+                  : field === "developerTools"
+                  ? developerToolOptions
+                  : libraryOptions
+                ).map((option) => (
+                  <div key={option} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`${field}-${option}`}
+                      checked={formData[field as keyof FormData].includes(option)}
+                      onCheckedChange={() => handleMultiSelect(field as any, option)}
+                    />
+                    <label htmlFor={`${field}-${option}`}>{option}</label>
+                  </div>
+                ))}
+              </div>
+              {errorMessages[field] && <div className="text-red-500 text-sm">{errorMessages[field]}</div>}
             </div>
           ))}
-          {errorMessages.education && <div className="text-red-500 text-sm">{errorMessages.education}</div>}
-        </div>
-
-        {["languages", "frameworks", "developerTools", "libraries"].map((field) => (
-          <div key={field}>
-            <div className="text-xl font-bold mb-4">
-              {field.charAt(0).toUpperCase() + field.slice(1)}
-            </div>
-            <div className="grid grid-cols-4 gap-5 mb-2">
-              {(field === "languages"
-                ? languageOptions
-                : field === "frameworks"
-                ? frameworkOptions
-                : field === "developerTools"
-                ? developerToolOptions
-                : libraryOptions
-              ).map((option) => (
-                <div key={option} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`${field}-${option}`}
-                    checked={formData[field as keyof FormData].includes(option)}
-                    onCheckedChange={() => handleMultiSelect(field as any, option)}
-                  />
-                  <label htmlFor={`${field}-${option}`}>{option}</label>
-                </div>
-              ))}
-            </div>
-            {errorMessages[field] && <div className="text-red-500 text-sm">{errorMessages[field]}</div>}
+          <div className="flex flex-col gap-2">
+            <div className="text-xl font-bold mb-4">Links</div>
+            <Input
+              placeholder="LinkedIn URL"
+              value={formData.linkedinUrl}
+              onChange={(e) => handleChange("linkedinUrl", e.target.value)}
+              className={errorMessages.linkedinUrl ? "border-red-500" : ""}
+            />
+            {errorMessages.linkedinUrl && (
+              <div className="text-red-500 text-sm">{errorMessages.linkedinUrl}</div>
+            )}
+            <Input
+              placeholder="GitHub URL"
+              value={formData.githubUrl}
+              onChange={(e) => handleChange("githubUrl", e.target.value)}
+              className={errorMessages.githubUrl ? "border-red-500" : ""}
+            />
+            {errorMessages.githubUrl && (
+              <div className="text-red-500 text-sm">{errorMessages.githubUrl}</div>
+            )}
           </div>
-        ))}
-
-        <div>
-          <div className="text-xl font-bold mb-4">Links</div>
-          <Input
-            placeholder="LinkedIn URL"
-            value={formData.linkedinUrl}
-            onChange={(e) => handleChange("linkedinUrl", e.target.value)}
-            className={errorMessages.linkedinUrl ? "border-red-500" : ""}
-          />
-          {errorMessages.linkedinUrl && (
-            <div className="text-red-500 text-sm">{errorMessages.linkedinUrl}</div>
-          )}
-          <Input
-            placeholder="GitHub URL"
-            value={formData.githubUrl}
-            onChange={(e) => handleChange("githubUrl", e.target.value)}
-            className={errorMessages.githubUrl ? "border-red-500" : ""}
-          />
-          {errorMessages.githubUrl && (
-            <div className="text-red-500 text-sm">{errorMessages.githubUrl}</div>
-          )}
-        </div>
-
-        <Button type="submit" className="w-full">
-          Proceed to Projects
-        </Button>
-      </form>
+          <Button type="submit" className="w-full bg-lime-300">
+            Proceed to Projects
+          </Button>
+        </form>
+      </div>
+                          <div className="absolute bottom-0 left-0 z-10 h-full w-full origin-center opacity-70">
+                          <TextHoverEffect text="DEVELOPER" />
+                        </div>
     </div>
   );
 }

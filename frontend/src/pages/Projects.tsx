@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { TextHoverEffect } from '@/components/ui/text-hover-effect';
 
 interface Project {
   id: number;
@@ -84,108 +85,109 @@ const Projects = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <header className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Projects</h1>
-        <Button 
-          type="submit" 
-          onClick={handleSubmit} 
-          className="bg-amber-200"
+    <div className="flex justify-center">
+      <div className="absolute container mx-auto p-4 border bg-neutral-900/40 backdrop-blur-[0.4rem] z-50 border-lime-500/50 rounded-lg m-5">
+        <header className="flex justify-between items-center mb-6">
+          <h1 className="text-4xl font-bold text-lime-500">Projects</h1>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            className="bg-lime-300"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Submitting...' : 'Proceed to view templates'}
+          </Button>
+        </header>
+        {error && (
+          <div className="mb-4 p-3 text-red-500 bg-red-100 rounded-md">
+            {error}
+          </div>
+        )}
+        <Button
+          className='mb-10 bg-lime-300'
+          onClick={addProject}
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Submitting...' : 'Proceed to view templates'}
+          <Plus className="mr-2 h-4 w-4" /> Add Project
         </Button>
-      </header>
-
-      {error && (
-        <div className="mb-4 p-3 text-red-500 bg-red-100 rounded-md">
-          {error}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map(project => (
+            <Card key={project.id} className="w-full text-lime-500">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                {editingId === project.id ? (
+                  <Input
+                    value={project.name}
+                    onChange={(e) => updateProject(project.id, { name: e.target.value })}
+                    className="font-semibold"
+                    placeholder="Project name"
+                    disabled={isSubmitting}
+                  />
+                ) : (
+                  <CardTitle>{project.name}</CardTitle>
+                )}
+                <div className="flex space-x-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setEditingId(editingId === project.id ? null : project.id)}
+                    disabled={isSubmitting}
+                  >
+                    {editingId === project.id ? <Check className="h-4 w-4" /> : <Edit2 className="h-4 w-4" />}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => deleteProject(project.id)}
+                    disabled={isSubmitting}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+        <div className="space-y-4">
+      <div className="space-y-2">
+        <h3 className="text-sm font-medium">Link</h3>
+        <div className="flex items-center space-x-2">
+          <LinkIcon className="h-4 w-4" />
+          {editingId === project.id ? (
+            <Input
+              value={project.link}
+              onChange={(e) => updateProject(project.id, { link: e.target.value })}
+              placeholder="Project link"
+              disabled={isSubmitting}
+            />
+          ) : (
+            <a href={project.link} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
+              {project.link || 'No link provided'}
+            </a>
+          )}
         </div>
-      )}
-
-      <Button 
-        className='mb-10 bg-amber-200' 
-        onClick={addProject}
-        disabled={isSubmitting}
-      >
-        <Plus className="mr-2 h-4 w-4" /> Add Project
-      </Button>
-
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map(project => (
-          <Card key={project.id} className="w-full text-amber-200">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              {editingId === project.id ? (
-                <Input
-                  value={project.name}
-                  onChange={(e) => updateProject(project.id, { name: e.target.value })}
-                  className="font-semibold"
-                  placeholder="Project name"
-                  disabled={isSubmitting}
-                />
-              ) : (
-                <CardTitle>{project.name}</CardTitle>
-              )}
-              <div className="flex space-x-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setEditingId(editingId === project.id ? null : project.id)}
-                  disabled={isSubmitting}
-                >
-                  {editingId === project.id ? <Check className="h-4 w-4" /> : <Edit2 className="h-4 w-4" />}
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => deleteProject(project.id)}
-                  disabled={isSubmitting}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-  <div className="space-y-4">
-    <div className="space-y-2">
-      <h3 className="text-sm font-medium">Link</h3>
-      <div className="flex items-center space-x-2">
-        <LinkIcon className="h-4 w-4" />
+      </div>
+      <div className="space-y-2">
+        <h3 className="text-sm font-medium">Description</h3>
         {editingId === project.id ? (
-          <Input
-            value={project.link}
-            onChange={(e) => updateProject(project.id, { link: e.target.value })}
-            placeholder="Project link"
+          <textarea
+            value={project.description}
+            onChange={(e) => updateProject(project.id, { description: e.target.value })}
+            placeholder="Explain the project"
+            className="w-full border rounded-md p-2 bg-neutral-950"
+            rows={4}
             disabled={isSubmitting}
           />
         ) : (
-          <a href={project.link} className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
-            {project.link || 'No link provided'}
-          </a>
+          <p className="line-clamp-2">{project.description || 'No description provided'}</p>
         )}
       </div>
-    </div>
-    <div className="space-y-2">
-      <h3 className="text-sm font-medium">Description</h3>
-      {editingId === project.id ? (
-        <textarea
-          value={project.description}
-          onChange={(e) => updateProject(project.id, { description: e.target.value })}
-          placeholder="Explain what the project is about in short"
-          className="w-full border rounded-md p-2 bg-black"
-          rows={4}
-          disabled={isSubmitting}
-        />
-      ) : (
-        <p className="line-clamp-2">{project.description || 'No description provided'}</p>
-      )}
-    </div>
-  </div>
-</CardContent>
-
-          </Card>
-        ))}
+        </div>
+      </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
+                          <div className="absolute bottom-0 left-0 z-10 h-full w-full origin-center opacity-70">
+                          <TextHoverEffect text="PROJECTS" />
+                        </div>
     </div>
   );
 };

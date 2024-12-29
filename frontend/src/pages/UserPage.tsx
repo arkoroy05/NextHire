@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useNavigate } from 'react-router-dom';
+import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import axios from 'axios';
 
 const userInitialData = {
@@ -115,59 +116,60 @@ export default function UserForm() {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-md">
-      <h1 className="text-3xl font-bold mb-6">User Details</h1>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <Label htmlFor="name">Name</Label>
-          <Input
-            id="name"
-            value={formData.name}
-            onChange={(e) => handleChange('name', e.target.value)}
-            placeholder="Enter your name"
-          />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
-        </div>
+    <div className="flex ih-full justify-center">
+      <div className="absolute container mx-auto p-4 max-w-md border bg-neutral-900/40 backdrop-blur-[0.4rem] z-50 border-lime-500/50 rounded-lg m-5">
+        <h1 className="text-4xl font-bold mb-6 text-lime-500">User Details</h1>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              value={formData.name}
+              onChange={(e) => handleChange('name', e.target.value)}
+              placeholder="Enter your name"
+            />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          </div>
+          <div>
+            <Label htmlFor="phoneNumber">Phone Number</Label>
+            <Input
+              id="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={(e) => handleChange('phoneNumber', e.target.value)}
+              placeholder="Enter your 10-digit phone number"
+            />
+            {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
+          </div>
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              value={formData.email}
+              onChange={(e) => handleChange('email', e.target.value)}
+              placeholder="Enter your email"
+            />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+          </div>
+          <div>
+            <Label htmlFor="experience">Experience (in years)</Label>
+            <Input
+              id="experience"
+              value={formData.experience}
+              onChange={(e) => handleChange('experience', e.target.value)}
+              placeholder="Enter your years of experience"
+            />
+            {errors.experience && <p className="text-red-500 text-sm">{errors.experience}</p>}
+          </div>
+          {errors.submit && <p className="text-red-500 text-sm mt-2">{errors.submit}</p>}
+          <Button type="submit" className="w-full bg-lime-300" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting...' : 'Submit'}
+          </Button>
+        </form>
+      </div>
+                    <div className="absolute bottom-0 left-0 z-10 h-full w-full origin-center opacity-70">
+                    <TextHoverEffect text="USER" />
+                  </div>
 
-        <div>
-          <Label htmlFor="phoneNumber">Phone Number</Label>
-          <Input
-            id="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={(e) => handleChange('phoneNumber', e.target.value)}
-            placeholder="Enter your 10-digit phone number"
-          />
-          {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
-        </div>
-
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            value={formData.email}
-            onChange={(e) => handleChange('email', e.target.value)}
-            placeholder="Enter your email"
-          />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-        </div>
-
-        <div>
-          <Label htmlFor="experience">Experience (in years)</Label>
-          <Input
-            id="experience"
-            value={formData.experience}
-            onChange={(e) => handleChange('experience', e.target.value)}
-            placeholder="Enter your years of experience"
-          />
-          {errors.experience && <p className="text-red-500 text-sm">{errors.experience}</p>}
-        </div>
-
-        {errors.submit && <p className="text-red-500 text-sm mt-2">{errors.submit}</p>}
-
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Submit'}
-        </Button>
-      </form>
     </div>
   );
 }
